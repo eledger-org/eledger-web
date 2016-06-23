@@ -1,5 +1,5 @@
 {
-  "name": "eledger",
+  "name": "eledger-web",
   "version": "0.1.0",
   "description": "A NodeJS api for serving eledger clients.",
   "scripts": {
