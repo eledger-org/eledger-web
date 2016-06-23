@@ -1,0 +1,50 @@
+{
+  "name": "eledger",
+  "version": "0.1.0",
+  "description": "A NodeJS api for serving eledger clients.",
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/eledger-org/eledger.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "2.0.0-rc.2",
+    "@angular/compiler": "2.0.0-rc.2",
+    "@angular/core": "2.0.0-rc.2",
+    "@angular/forms": "0.1.0",
+    "@angular/http": "2.0.0-rc.2",
+    "@angular/platform-browser": "2.0.0-rc.2",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.2",
+    "@angular/router": "3.0.0-alpha.7",
+    "@angular/router-deprecated": "2.0.0-rc.2",
+    "@angular/upgrade": "2.0.0-rc.2",
+    "ag-grid": "4.2.x",
+    "ag-grid-ng2": "4.2.x",
+    "angular2-in-memory-web-api": "0.0.12",
+    "bootstrap": "^3.3.6",
+    "core-js": "^2.4.0",
+    "primeng": "^1.0.0-beta.8",
+    "primeui": "^4.1.12",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "systemjs": "0.19.27",
+    "zone.js": "^0.6.12"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "eslint": "^2.13.1",
+    "eslint-config-angular": "^0.5.0",
+    "eslint-plugin-angular": "^1.1.1",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
+  }
+}
