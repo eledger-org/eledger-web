@@ -7,7 +7,7 @@ import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 
 @Component({
   selector: "DatabaseVersion",
-	templateUrl: "app/database.version.component.html",
+	templateUrl: "app/DatabaseVersion.component.html",
   providers: [
     EledgerApiConfiguration,
     DatabaseVersionService
