@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http, Response, Headers } from "@angular/http";
+import { Headers, Http, Response, URLSearchParams } from "@angular/http";
 import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
@@ -18,8 +18,20 @@ export class LedgerEntriesService {
   }
 
   public getLedgerEntries =  (offset: number, limit: number): Observable<Response> => {
-    console.log(this.actionUrl);
-    return this._http.get(this.actionUrl).map(res => res.json());
+    let params: URLSearchParams = new URLSearchParams();
+    if (offset !== undefined) {
+      params.set("offset", "" + offset);
+    }
+
+    if (limit !== undefined) {
+      params.set("limit", "" + limit);
+    }
+
+    return this._http
+      .get(this.actionUrl, {
+        search: params
+      })
+      .map(res => res.json());
   }
 
   public getById = (id: number): Observable<Response> => {

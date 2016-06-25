@@ -9,6 +9,7 @@ import {
   DataTable,
   Footer,
   Header,
+  LazyLoadEvent,
   MenuItem
 } from "primeng/primeng";
 
@@ -35,6 +36,9 @@ import { LedgerEntriesService } from "../services/LedgerEntries.service";
 export class LedgerEntriesComponent implements OnInit {
   @Input()
   public ledgerEntries;
+  public totalRecords;
+  public totalRows;
+
   public cols: any[];
 
   public gridOptions;
@@ -56,11 +60,9 @@ export class LedgerEntriesComponent implements OnInit {
       "modifiedDate",
       "deletedDate"
     ];
-
-    this.getLedgerEntries();
   }
 
-  testAdd() {
+  addNewLedgerEntryButton() {
     this.ledgerEntries.unshift({
       "generalLedgerDate": "Required",
       "description": "Required",
@@ -69,15 +71,19 @@ export class LedgerEntriesComponent implements OnInit {
     });
   }
 
-  private getLedgerEntries(): void {
+  private loadLazy(event: LazyLoadEvent) {
+    console.log(event);
+    this.getLedgerEntries(event["first"], event["rows"]);
+  }
+
+  private getLedgerEntries(offset: number, limit: number): void {
     this.ledgerEntriesService
-      .getLedgerEntries(0, 10)
+      .getLedgerEntries(offset, limit)
       .subscribe((data) => {
         this.cols = [];
 
-        for (let prop in data[0]) {
+        for (let prop in data["results"][0]) {
           if (this.filter.indexOf(prop) <= -1) {
-            console.log(prop);
             this.cols.push({
               field: prop,
               header: prop
@@ -85,22 +91,14 @@ export class LedgerEntriesComponent implements OnInit {
           }
         }
 
-        /*
-        this.cols.push({
-          field: "deleteButton",
-          header: "Delete"
+        this.totalRows      = data["length"];
+        this.totalRecords   = data["count"];
+        this.ledgerEntries  = data["results"];
+        console.log({
+          totalRows: this.totalRows,
+          totalRecords: this.totalRecords,
+          ledgerEntries: this.ledgerEntries
         });
-        */
-
-        this.ledgerEntries = data;
-
-        /*
-        for (let ledgerEntry in this.ledgerEntries) {
-          ledgerEntry.deleteButton = {
-            "test": "<a href=\"#\" onclick="
-          };
-        }
-        */
       });
 
 

@@ -2,13 +2,16 @@
   <!--{{ledgerEntries}}!-->
 </h2>
 
-<p-dataTable [value]="ledgerEntries" [rows]="10" [paginator]="true" [pageLinks]="5"
-  [rowsPerPageOptions]="[10,50,100,1000]" [editable]="true">
+<p-dataTable [value]="ledgerEntries"
+  [paginator]="true" [rowsPerPageOptions]="[10,50,100,1000]" [pageLinks]="5"
+  [totalRecords]="totalRecords" [rows]="totalRows"
+  [editable]="true"
+  [lazy]="true" (onLazyLoad)="loadLazy($event)">
   <header>Yay!</header>
   <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [editable]="true"></p-column>
   <footer>
     <div class="ui-helper-clearfix" style="width:100%">
-      <button type="button" pButton icon="fa-plus" style="float:left" (click)="testAdd()" label="Add">
+      <button type="button" pButton icon="fa-plus" style="float:left" (click)="addNewLedgerEntryButton()" label="Add">
       </button>
     </div>
   </footer>
