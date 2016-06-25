@@ -14,11 +14,11 @@ import {
 } from "primeng/primeng";
 
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
-import { LedgerEntriesService } from "../services/LedgerEntries.service";
+import { LedgerEntriesService } from "./service";
 
 @Component({
   selector: "LedgerEntries",
-	templateUrl: "app/templates/LedgerEntries.component.html",
+	templateUrl: "./app/LedgerEntries/component.html",
   providers: [
     EledgerApiConfiguration,
     LedgerEntriesService

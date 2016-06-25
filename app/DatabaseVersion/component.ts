@@ -2,12 +2,12 @@ import { Component, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams } from "@angular/router-deprecated";
 
-import { DatabaseVersionService } from "../services/DatabaseVersion.service";
+import { DatabaseVersionService } from "./service";
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 
 @Component({
   selector: "DatabaseVersion",
-	templateUrl: "app/templates/DatabaseVersion.component.html",
+	templateUrl: "./app/DatabaseVersion/component.html",
   providers: [
     EledgerApiConfiguration,
     DatabaseVersionService

@@ -4,10 +4,10 @@ import { HTTP_PROVIDERS } from "@angular/http";
 
 import { InputText } from "primeng/primeng";
 
-import { DatabaseVersionComponent } from "./controllers/DatabaseVersion.component";
-import { DatabaseVersionService } from "./services/DatabaseVersion.service";
+import { DatabaseVersionComponent } from "./DatabaseVersion/component";
+import { DatabaseVersionService } from "./DatabaseVersion/service";
 
-import { LedgerEntriesComponent } from "./controllers/LedgerEntries.component";
+import { LedgerEntriesComponent } from "./LedgerEntries/component";
 
 @Component({
   selector: "my-app",
@@ -36,5 +36,5 @@ import { LedgerEntriesComponent } from "./controllers/LedgerEntries.component";
 ])
 
 export class AppComponent {
-  title = "Tour of Heroes";
+  title = "Eledger";
 };
