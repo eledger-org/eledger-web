@@ -7,6 +7,9 @@ import { InputText } from "primeng/primeng";
 import { DatabaseVersionComponent } from "./DatabaseVersion/component";
 import { DatabaseVersionService } from "./DatabaseVersion/service";
 
+import { UploadsComponent } from "./Uploads/component";
+import { UploadsService } from "./Uploads/service";
+
 import { LedgerEntriesComponent } from "./LedgerEntries/component";
 
 @Component({
@@ -17,7 +20,8 @@ import { LedgerEntriesComponent } from "./LedgerEntries/component";
 	providers: [
     HTTP_PROVIDERS,
 		ROUTER_PROVIDERS,
-    DatabaseVersionService
+    DatabaseVersionService,
+    UploadsService
 	]
 })
 
@@ -27,6 +31,11 @@ import { LedgerEntriesComponent } from "./LedgerEntries/component";
     name: "Database Version",
     component: DatabaseVersionComponent,
     useAsDefault: true
+  },
+  {
+    path: "/uploads",
+    name: "Uploads",
+    component: UploadsComponent
   },
   {
     path: "/ledger-entries",
