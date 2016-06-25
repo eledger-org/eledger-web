@@ -60,6 +60,8 @@ export class LedgerEntriesComponent implements OnInit {
       "modifiedDate",
       "deletedDate"
     ];
+
+    this.totalRows = 10;
   }
 
   addNewLedgerEntryButton() {
@@ -74,6 +76,7 @@ export class LedgerEntriesComponent implements OnInit {
   private loadLazy(event: LazyLoadEvent) {
     console.log(event);
     this.getLedgerEntries(event["first"], event["rows"]);
+    this.totalRows = event["rows"];
   }
 
   private getLedgerEntries(offset: number, limit: number): void {
@@ -91,7 +94,6 @@ export class LedgerEntriesComponent implements OnInit {
           }
         }
 
-        this.totalRows      = data["length"];
         this.totalRecords   = data["count"];
         this.ledgerEntries  = data["results"];
         console.log({
