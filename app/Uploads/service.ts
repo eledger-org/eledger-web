@@ -17,7 +17,7 @@ export class UploadsService {
     this.headers.append("Accept", "application/json");
   }
 
-  public getUploads =  (offset: number, limit: number): Observable<Response> => {
+  public getUploads =  (offset: number, limit: number, sortField: string, sortOrder: number): Observable<Response> => {
     let params: URLSearchParams = new URLSearchParams();
     if (offset !== undefined) {
       params.set("offset", "" + offset);
@@ -27,15 +27,44 @@ export class UploadsService {
       params.set("limit", "" + limit);
     }
 
+    if (sortField !== undefined) {
+      params.set("sortField", "" + sortField);
+    }
+
+    if (sortOrder !== undefined) {
+      params.set("sortOrder", "" + sortOrder);
+    }
+
     return this._http
       .get(this.actionUrl, {
         search: params
       })
-      .map(res => res.json());
+      .map(this.transformResponseToHuman);
   }
 
   public getById = (id: number): Observable<Response> => {
     console.log(this.actionUrl);
-    return this._http.get(this.actionUrl).map(res => res.json());
+    return this._http.get(this.actionUrl).map(this.transformResponseToHuman);
+  }
+
+  public transformResponseToHuman(res) {
+    let res2 = res.json();
+
+    console.log(res2);
+
+    res2.results = res2.results.map(function(result) {
+      result.createdDate = UploadsService.dateOnlyFormat(new Date(result.createdDate * 1000));
+
+      return result;
+    });
+
+    return res2;
+  }
+
+  /* TODO move this somewhere reusable */
+  public static dateOnlyFormat(date: Date) {
+    return date.getFullYear() + "/" +
+      (date.getMonth() <= 8 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) + "/" +
+      (date.getDate() <= 9 ? "0" + date.getDate() : date.getDate());
   }
 }

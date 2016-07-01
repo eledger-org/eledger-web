@@ -1,10 +1,51 @@
-<p-dataTable [value]="uploads"
+<p-dataTable #dt
+  [value]="uploads"
   [paginator]="true" [rowsPerPageOptions]="[10,50,100,1000]" [pageLinks]="5"
   [totalRecords]="totalRecords" [rows]="totalRows"
   [editable]="true"
-  [lazy]="true" (onLazyLoad)="loadLazy($event)">
-  <header>Yay!</header>
-  <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [editable]="true"></p-column>
+  [lazy]="true" (onLazyLoad)="loadLazy($event)"
+  sortField="id"
+  sortOrder="1"
+  reorderableColumns="true"
+  resizableColumns="true"
+  >
+  <header>
+    <div class="ui-helper-clearfix" style="text-align: left">
+      <button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV"
+        (click)="dt.exportCSV()" style="float:left"></button>
+      <!--
+      <p-multiSelect *ngIf="true" [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+      -->
+    </div>
+  </header>
+  <p-column
+    field="id" header="id"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    field="createdDate" header="createdDate"
+    editable="true"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    field="uploadLink" header="uploadLink"
+    >
+    <template let-upload="rowData">
+      <button type="button" pButton name="uploadLink" (click)="viewUpload(upload)" icon="fa-barcode" label="View"></button>
+    </template>
+  </p-column>
+  <!--
+  <p-column
+    *ngFor="let col of cols"
+    [field]="col.field"
+    [header]="col.header"
+    [editable]="true"
+    [sortable]="true"
+    >
+  </p-column>
+  -->
   <footer>
     <div class="ui-helper-clearfix" style="width:100%">
       <button type="button" pButton icon="fa-plus" style="float:left" (click)="uploadFile()" label="Add">
@@ -12,4 +53,16 @@
     </div>
   </footer>
 </p-dataTable>
+
+<div class="overlay-tint" id="overlay-tint"
+  style.width="100%"
+  [style.height.px]="overlayHeight"
+  [hidden]="overlayHidden"
+  (click)="hideOverlay()"
+  >
+</div>
+
+<div class="overlay-div" id="overlay" [hidden]="overlayHidden">
+  <img [style.height.px]="overlayHeight" class="overlay-image" id="overlay-image" [src]="overlayImageSrc" />
+</div>
 

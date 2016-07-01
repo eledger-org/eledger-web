@@ -1,36 +1,25 @@
 import { Component, OnInit }  from "@angular/core";
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "@angular/router-deprecated";
-import { HTTP_PROVIDERS } from "@angular/http";
+import { RouteConfig, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
 import { InputText } from "primeng/primeng";
 
-import { DatabaseVersionComponent } from "./DatabaseVersion/component";
-import { DatabaseVersionService } from "./DatabaseVersion/service";
-
-import { UploadsComponent } from "./Uploads/component";
-import { UploadsService } from "./Uploads/service";
-
-import { LedgerEntriesComponent } from "./LedgerEntries/component";
+import { DatabaseVersionComponent }     from "./DatabaseVersion/component";
+import { LedgerEntriesComponent }       from "./LedgerEntries/component";
+import { SimpleTransactionsComponent }  from "./SimpleTransactions/component";
+import { UploadsComponent }             from "./Uploads/component";
 
 @Component({
   selector: "my-app",
   templateUrl: "app/app.component.html",
 	styleUrls: ["app/app.component.css"],
-	directives: [ROUTER_DIRECTIVES],
-	providers: [
-    HTTP_PROVIDERS,
-		ROUTER_PROVIDERS,
-    DatabaseVersionService,
-    UploadsService
-	]
+  directives: [ROUTER_DIRECTIVES]
 })
 
 @RouteConfig([
   {
     path: "/database-version",
     name: "Database Version",
-    component: DatabaseVersionComponent,
-    useAsDefault: true
+    component: DatabaseVersionComponent
   },
   {
     path: "/uploads",
@@ -41,6 +30,11 @@ import { LedgerEntriesComponent } from "./LedgerEntries/component";
     path: "/ledger-entries",
     name: "Ledger Entries",
     component: LedgerEntriesComponent
+  },
+  {
+    path: "/simple-transactions",
+    name: "Simple Transactions",
+    component: SimpleTransactionsComponent
   }
 ])
 

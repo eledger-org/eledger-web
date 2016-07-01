@@ -13,10 +13,6 @@
     "rxjs":                       "node_modules/rxjs",
     "primeng":                    "node_modules/primeng"
   };
-  /*
-    "ag-grid-ng2":                "node_modules/ag-grid-ng2",
-    "ag-grid":                    "node_modules/ag-grid"
-   */
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     "app":                        { main: "main.js",  defaultExtension: "js" },
@@ -24,18 +20,6 @@
     "angular2-in-memory-web-api": { main: "index.js", defaultExtension: "js" },
     "primeng":                    { defaultExtension: "js" }
   };
-    /*
-    lib: {
-      format: "register",
-      defaultExtension: "js"
-    },
-    "ag-grid-ng2": {
-      defaultExtension: "js"
-    },
-    "ag-grid": {
-      defaultExtension: "js"
-    }
-    */
   var ngPackageNames = [
     "common",
     "compiler",
@@ -44,7 +28,6 @@
     "http",
     "platform-browser",
     "platform-browser-dynamic",
-    "router-deprecated",
     "upgrade",
   ];
   // Individual files (~300 requests):
@@ -59,6 +42,7 @@
   var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
   // Add package entries for angular packages
   ngPackageNames.forEach(setPackageConfig);
+  packages['@angular/router-deprecated'] = { main: 'index.js', defaultExtension: 'js' };
   packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
   var config = {
     map: map,
