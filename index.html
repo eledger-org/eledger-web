@@ -17,7 +17,12 @@
     <link rel="stylesheet" type="text/css" href="/node_modules/ng2-select/components/css/ng2-select.css" />
     <link rel="stylesheet" type="text/css" href="/app/static/css/font-awesome-4.6.3/css/font-awesome.min.css" />
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+      System.import('app').then(function(m) {
+        apiurl = "/api/";
+        apitoken = "";
+
+        m.Run(apiurl, apitoken);
+      }).catch(function(err){ console.error(err); });
     </script>
   </head>
   <!-- 3. Display the application -->

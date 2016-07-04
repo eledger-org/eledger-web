@@ -2,15 +2,15 @@ import { Injectable } from "@angular/core";
 import { Headers, Http, Response, URLSearchParams } from "@angular/http";
 import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
-import { EledgerApiConfiguration } from "../api/eledger.api.conf";
+import { EledgerApiService } from "../api/eledger/service";
 
 @Injectable()
 export class UploadsService {
   private actionUrl: string;
   private headers: Headers;
 
-  constructor(private _http: Http, private _configuration: EledgerApiConfiguration) {
-    this.actionUrl = _configuration.ApiUrl + "uploads/";
+  constructor(private _http: Http, private _configuration: EledgerApiService) {
+    this.actionUrl = _configuration.getApiUrl() + "uploads/";
 
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");

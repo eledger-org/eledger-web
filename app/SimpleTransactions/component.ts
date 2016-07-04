@@ -2,18 +2,19 @@ import { Component, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams } from "@angular/router-deprecated";
 
-import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 import { SimpleTransactionsService } from "./service";
+
+import { EledgerApiService } from "../api/eledger/service";
 
 @Component({
   selector: "SimpleTransactions",
 	templateUrl: "./app/SimpleTransactions/component.html",
   providers: [
-    EledgerApiConfiguration,
     SimpleTransactionsService
   ],
   directives: [
-    CORE_DIRECTIVES
+    CORE_DIRECTIVES,
+    EledgerApiService
     /*
     DataTable,
     Button,

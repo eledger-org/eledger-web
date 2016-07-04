@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output }  from "@angular/core";
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from '@angular/common';
 
 import { AccountsService } from "../../Accounts/service";
-import { EledgerApiConfiguration } from "../../api/eledger.api.conf";
 
 import { SELECT_DIRECTIVES } from "ng2-select/ng2-select";
 
@@ -10,8 +9,7 @@ import { SELECT_DIRECTIVES } from "ng2-select/ng2-select";
   selector: "e-accountSelector",
 	templateUrl: "./app/components/AccountSelector/component.html",
   providers: [
-    AccountsService,
-    EledgerApiConfiguration
+    AccountsService
   ],
   directives: [
     CORE_DIRECTIVES,

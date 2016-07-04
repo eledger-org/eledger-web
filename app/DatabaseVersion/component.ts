@@ -3,14 +3,15 @@ import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams } from "@angular/router-deprecated";
 
 import { DatabaseVersionService } from "./service";
-import { EledgerApiConfiguration } from "../api/eledger.api.conf";
+
+import { EledgerApiService } from "../api/eledger/service";
 
 @Component({
   selector: "DatabaseVersion",
 	templateUrl: "./app/DatabaseVersion/component.html",
   providers: [
-    EledgerApiConfiguration,
-    DatabaseVersionService
+    DatabaseVersionService,
+    EledgerApiService
   ],
   directives: [CORE_DIRECTIVES ]
 })

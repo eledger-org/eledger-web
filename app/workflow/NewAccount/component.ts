@@ -4,14 +4,14 @@ import { CORE_DIRECTIVES } from "@angular/common";
 import { AccountsService } from "../../Accounts/service";
 
 import { AccountSelectorComponent } from "../../components/AccountSelector/component";
-import { EledgerApiConfiguration } from "../../api/eledger.api.conf";
+import { EledgerApiService } from "../../api/eledger/service";
 
 @Component({
   selector: "NewAccount",
 	templateUrl: "./app/workflow/NewAccount/component.html",
   providers: [
-    EledgerApiConfiguration,
-    AccountsService
+    AccountsService,
+    EledgerApiService
   ],
   directives: [
     AccountSelectorComponent,

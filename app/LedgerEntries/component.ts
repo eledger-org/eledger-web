@@ -2,14 +2,15 @@ import { Component, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams } from "@angular/router-deprecated";
 
-import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 import { LedgerEntriesService } from "./service";
+
+import { EledgerApiService } from "../api/eledger/service";
 
 @Component({
   selector: "LedgerEntries",
 	templateUrl: "./app/LedgerEntries/component.html",
   providers: [
-    EledgerApiConfiguration,
+    EledgerApiService,
     LedgerEntriesService
   ],
   directives: [

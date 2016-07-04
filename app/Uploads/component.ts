@@ -2,18 +2,19 @@ import { Component, HostListener, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
-import { EledgerApiConfiguration } from "../api/eledger.api.conf";
+import { EledgerApiService } from "../api/eledger/service";
 import { UploadsService } from "./service";
 
 @Component({
   selector: "Uploads",
 	templateUrl: "./app/Uploads/component.html",
   providers: [
-    EledgerApiConfiguration,
+    EledgerApiService,
     UploadsService
   ],
   directives: [
     CORE_DIRECTIVES,
+    EledgerApiService
     /*
     DataTable,
     Button,
