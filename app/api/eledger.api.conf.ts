@@ -3,5 +3,14 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class EledgerApiConfiguration {
   /* TODO: Make this configurable */
-  public ApiUrl: string = "/api/";
+  public ApiUrl: string;
+
+  constructor()
+  {
+    let config = require("config");
+
+    if (config.has("apiurl")) {
+      ApiUrl = config.get("apiurl");
+    }
+  }
 }

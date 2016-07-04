@@ -2,17 +2,6 @@ import { Component, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams } from "@angular/router-deprecated";
 
-import {
-  Accordion,
-  Button,
-  Column,
-  DataTable,
-  Footer,
-  Header,
-  LazyLoadEvent,
-  MenuItem
-} from "primeng/primeng";
-
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 import { SimpleTransactionsService } from "./service";
 
@@ -24,12 +13,14 @@ import { SimpleTransactionsService } from "./service";
     SimpleTransactionsService
   ],
   directives: [
-    CORE_DIRECTIVES,
+    CORE_DIRECTIVES
+    /*
     DataTable,
     Button,
     Column,
     Header,
     Footer
+    */
   ]
 })
 
@@ -72,11 +63,13 @@ export class SimpleTransactionsComponent implements OnInit {
     });
   }
 
+  /*
   private loadLazy(event: LazyLoadEvent) {
     console.log(event);
     this.getSimpleTransactions(event["first"], event["rows"]);
     this.totalRows = event["rows"];
   }
+  */
 
   private getSimpleTransactions(offset: number, limit: number): void {
     this.simpleTransactionsService

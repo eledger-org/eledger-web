@@ -39,3 +39,4 @@ export class LedgerEntriesService {
     return this._http.get(this.actionUrl).map(res => res.json());
   }
 }
+

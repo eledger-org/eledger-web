@@ -7,7 +7,6 @@ import { ROUTER_PROVIDERS }                     from "@angular/router-deprecated
 
 import { AppComponent }                         from "./app.component";
 
-
 import {
   APP_BASE_HREF,
   LocationStrategy,

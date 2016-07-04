@@ -2,17 +2,6 @@ import { Component, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams } from "@angular/router-deprecated";
 
-import {
-  Accordion,
-  Button,
-  Column,
-  DataTable,
-  Footer,
-  Header,
-  LazyLoadEvent,
-  MenuItem
-} from "primeng/primeng";
-
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 import { LedgerEntriesService } from "./service";
 
@@ -24,12 +13,14 @@ import { LedgerEntriesService } from "./service";
     LedgerEntriesService
   ],
   directives: [
-    CORE_DIRECTIVES,
+    CORE_DIRECTIVES
+    /*
     DataTable,
     Button,
     Column,
     Header,
     Footer
+    */
   ]
 })
 
@@ -73,11 +64,13 @@ export class LedgerEntriesComponent implements OnInit {
     });
   }
 
+  /*
   private loadLazy(event: LazyLoadEvent) {
     console.log(event);
     this.getLedgerEntries(event["first"], event["rows"]);
     this.totalRows = event["rows"];
   }
+  */
 
   private getLedgerEntries(offset: number, limit: number): void {
     this.ledgerEntriesService

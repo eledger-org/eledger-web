@@ -42,15 +42,19 @@ export class UploadsService {
       .map(this.transformResponseToHuman);
   }
 
+  public getUnmappedUpload = (): Observable<Response> => {
+    let url = this.actionUrl + "unmapped";
+
+    return this._http
+      .get(url).map(this.transformResponseToHuman);
+  }
+
   public getById = (id: number): Observable<Response> => {
-    console.log(this.actionUrl);
     return this._http.get(this.actionUrl).map(this.transformResponseToHuman);
   }
 
   public transformResponseToHuman(res) {
     let res2 = res.json();
-
-    console.log(res2);
 
     res2.results = res2.results.map(function(result) {
       result.createdDate = UploadsService.dateOnlyFormat(new Date(result.createdDate * 1000));

@@ -5,19 +5,23 @@ import { Observable } from "rxjs/Observable";
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 
 @Injectable()
-export class SimpleTransactionsService {
+export class AccountsService {
   private actionUrl: string;
   private headers: Headers;
 
   constructor(private _http: Http, private _configuration: EledgerApiConfiguration) {
-    this.actionUrl = _configuration.ApiUrl + "simple-transactions/";
+    this.actionUrl = _configuration.ApiUrl + "accounts/";
 
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
     this.headers.append("Accept", "application/json");
   }
 
-  public getSimpleTransactions =  (offset: number, limit: number): Observable<Response> => {
+  public getAllAccounts = (): Observable<Response> => {
+    return this.getAccounts(undefined, undefined);
+  }
+
+  public getAccounts =  (offset: number, limit: number): Observable<Response> => {
     let params: URLSearchParams = new URLSearchParams();
     if (offset !== undefined) {
       params.set("offset", "" + offset);
@@ -35,12 +39,11 @@ export class SimpleTransactionsService {
   }
 
   public getById = (id: number): Observable<Response> => {
-    console.log(this.actionUrl);
     return this._http.get(this.actionUrl).map(res => res.json());
   }
 
-  public postNewSimpleTransaction = (newSimpleTransaction): Observable<Response> => {
-    let body = JSON.stringify({length: 1, results: [newSimpleTransaction]});
+  public postNewAccount = (newAccount): Observable<Response> => {
+    let body = JSON.stringify({length: 1, results: [newAccount]});
 
     let options = new RequestOptions({
       headers: new Headers({
@@ -53,3 +56,4 @@ export class SimpleTransactionsService {
       .map(res => res.json());
   }
 }
+

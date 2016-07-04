@@ -11,14 +11,18 @@
     "@angular":                   "node_modules/@angular",
     "angular2-in-memory-web-api": "node_modules/angular2-in-memory-web-api",
     "rxjs":                       "node_modules/rxjs",
-    "primeng":                    "node_modules/primeng"
+    "ng2-select":                 "node_modules/ng2-select/",
+    "ng2-bootstrap":              "node_modules/ng2-bootstrap/",
+    "angular2TextMask":           "node_modules/angular2-text-mask/dist"
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     "app":                        { main: "main.js",  defaultExtension: "js" },
-    "rxjs":                       { defaultExtension: "js" },
     "angular2-in-memory-web-api": { main: "index.js", defaultExtension: "js" },
-    "primeng":                    { defaultExtension: "js" }
+    "rxjs":                       { defaultExtension: "js" },
+    "ng2-select":                 { defaultExtension: "js", main: "index.js" },
+    "ng2-bootstrap":              { main: "index.js" },
+    "angular2TextMask":           { main: "angular2TextMask.js" }
   };
   var ngPackageNames = [
     "common",

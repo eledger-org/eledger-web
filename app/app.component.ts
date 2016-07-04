@@ -1,9 +1,9 @@
 import { Component, OnInit }  from "@angular/core";
 import { RouteConfig, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
-import { InputText } from "primeng/primeng";
-
+import { NewAccountComponent }          from "./workflow/NewAccount/component";
 import { DatabaseVersionComponent }     from "./DatabaseVersion/component";
+import { ExistingReceiptComponent }     from "./workflow/ExistingReceipt/component";
 import { LedgerEntriesComponent }       from "./LedgerEntries/component";
 import { SimpleTransactionsComponent }  from "./SimpleTransactions/component";
 import { UploadsComponent }             from "./Uploads/component";
@@ -22,9 +22,14 @@ import { UploadsComponent }             from "./Uploads/component";
     component: DatabaseVersionComponent
   },
   {
-    path: "/uploads",
-    name: "Uploads",
-    component: UploadsComponent
+    path: "/existing-receipt",
+    name: "Existing Receipt",
+    component: ExistingReceiptComponent
+  },
+  {
+    path: "/new-account",
+    name: "New Account",
+    component: NewAccountComponent
   },
   {
     path: "/ledger-entries",
@@ -35,6 +40,11 @@ import { UploadsComponent }             from "./Uploads/component";
     path: "/simple-transactions",
     name: "Simple Transactions",
     component: SimpleTransactionsComponent
+  },
+  {
+    path: "/uploads",
+    name: "Uploads",
+    component: UploadsComponent
   }
 ])
 

@@ -2,21 +2,6 @@ import { Component, HostListener, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
-import {
-  Accordion,
-  Button,
-  Column,
-  ContextMenu,
-  DataTable,
-  Dialog,
-  Footer,
-  Header,
-  LazyLoadEvent,
-  MenuItem,
-  MultiSelect,
-  SelectItem
-} from "primeng/primeng";
-
 import { EledgerApiConfiguration } from "../api/eledger.api.conf";
 import { UploadsService } from "./service";
 
@@ -29,6 +14,7 @@ import { UploadsService } from "./service";
   ],
   directives: [
     CORE_DIRECTIVES,
+    /*
     DataTable,
     Button,
     Column,
@@ -37,6 +23,7 @@ import { UploadsService } from "./service";
     Header,
     Footer,
     MultiSelect,
+    */
     ROUTER_DIRECTIVES
   ]
 })
@@ -51,7 +38,7 @@ export class UploadsComponent implements OnInit {
   public sortOrder: number;
 
   public cols: any[];
-  public columnOptions: SelectItem[];
+  public columnOptions: any[];
 
   public overlayImageSrc: string;
   public overlayHidden: boolean = true;
@@ -65,7 +52,7 @@ export class UploadsComponent implements OnInit {
   public filter: any[];
 
   public selectedRow;
-  public menuItems: MenuItem[];
+  public menuItems: any[];
 
   constructor(
     private uploadsService: UploadsService,
@@ -88,7 +75,7 @@ export class UploadsComponent implements OnInit {
     this.initialized = false;
 
     this.cols = [];
-    this.columnOptions = [];
+    //this.columnOptions = [];
 
     this.menuItems = [
       {
@@ -129,6 +116,7 @@ export class UploadsComponent implements OnInit {
     this.overlayHidden = true;
   }
 
+  /*
   private loadLazy(event: LazyLoadEvent) {
     console.log(event);
     this.getUploads(event["first"], event["rows"], event["sortField"], event["sortOrder"]);
@@ -136,6 +124,7 @@ export class UploadsComponent implements OnInit {
     this.sortField = event["sortField"];
     this.sortOrder = event["sortOrder"];
   }
+  */
 
   private getUploads(offset: number, limit: number, sortField: string, sortOrder: number): void {
     this.uploadsService

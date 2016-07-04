@@ -1,0 +1,14 @@
+<div style="width: 300px; margin-bottom: 20px;" class="form-group">
+  <label for="account">{{label}}</label>
+  <ng-select
+    name="{{name}}"
+    [allowClear]="true"
+    [items]="accounts"
+    [disabled]="disabled"
+    (data)="data($event)"
+    (selected)="selected($event)"
+    (typed)="typed($event)"
+    placeholder="No account selected"
+    ></ng-select>
+</div>
+

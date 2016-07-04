@@ -1,0 +1,28 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <form (ngSubmit)="onSubmit()" #accountForm="ngForm">
+      <e-accountSelector
+        name="parent" label="Parent Account"
+        [accounts]="accounts"
+        (accountUpdated)="parentAccountUpdated($event)"
+        >
+      </e-accountSelector>
+
+      <div class="form-group">
+        <label for="accountName">New Account Name</label>
+        <input
+          type="text" class="form-control" style="width: 300px; margin-bottom: 20px;"
+          [(ngModel)]="newAccount.accountName" />
+      </div>
+
+      <div class="form-group">
+        <label for="accountName">New Short Account Name</label>
+        <input
+          type="text" class="form-control" style="width: 300px; margin-bottom: 20px;"
+          [(ngModel)]="newAccount.accountShortName" />
+      </div>
+
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div>
