@@ -10,7 +10,7 @@ export class EledgerApiConfiguration {
     let config = require("config");
 
     if (config.has("apiurl")) {
-      ApiUrl = config.get("apiurl");
+      this.ApiUrl = config.get("apiurl");
     }
   }
 }
