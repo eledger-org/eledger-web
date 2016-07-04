@@ -14,7 +14,7 @@ import { UploadsService } from "./service";
   ],
   directives: [
     CORE_DIRECTIVES,
-    EledgerApiService
+    EledgerApiService,
     /*
     DataTable,
     Button,

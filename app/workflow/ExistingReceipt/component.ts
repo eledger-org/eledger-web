@@ -5,6 +5,8 @@ import { AccountsService } from "../../Accounts/service";
 import { SimpleTransactionsService } from "../../SimpleTransactions/service";
 import { UploadsService } from "../../Uploads/service";
 
+import { EledgerApiService } from "../../api/eledger/service";
+
 import { AccountSelectorComponent } from "../../components/AccountSelector/component";
 
 @Component({
@@ -12,6 +14,7 @@ import { AccountSelectorComponent } from "../../components/AccountSelector/compo
 	templateUrl: "./app/workflow/ExistingReceipt/component.html",
   providers: [
     AccountsService,
+    EledgerApiService,
     SimpleTransactionsService,
     UploadsService
   ],
