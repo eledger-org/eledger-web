@@ -2,8 +2,21 @@ import { Component, HostListener, OnInit, Input }  from "@angular/core";
 import { CORE_DIRECTIVES } from "@angular/common";
 import { RouteParams, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
-import { EledgerApiService } from "../api/eledger/service";
 import { UploadsService } from "./service";
+
+import { EledgerApiService } from "../api/eledger/service";
+
+import {
+  DataTable,
+  Button,
+  Column,
+  ContextMenu,
+  Dialog,
+  Header,
+  Footer,
+  LazyLoadEvent,
+  MultiSelect
+} from "primeng/primeng";
 
 @Component({
   selector: "Uploads",
@@ -13,18 +26,15 @@ import { UploadsService } from "./service";
     UploadsService
   ],
   directives: [
-    CORE_DIRECTIVES,
-    EledgerApiService,
-    /*
-    DataTable,
     Button,
     Column,
     ContextMenu,
+    CORE_DIRECTIVES,
+    DataTable,
     Dialog,
-    Header,
     Footer,
+    Header,
     MultiSelect,
-    */
     ROUTER_DIRECTIVES
   ]
 })
@@ -117,7 +127,6 @@ export class UploadsComponent implements OnInit {
     this.overlayHidden = true;
   }
 
-  /*
   private loadLazy(event: LazyLoadEvent) {
     console.log(event);
     this.getUploads(event["first"], event["rows"], event["sortField"], event["sortOrder"]);
@@ -125,7 +134,6 @@ export class UploadsComponent implements OnInit {
     this.sortField = event["sortField"];
     this.sortOrder = event["sortOrder"];
   }
-  */
 
   private getUploads(offset: number, limit: number, sortField: string, sortOrder: number): void {
     this.uploadsService

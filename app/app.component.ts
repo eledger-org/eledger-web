@@ -8,6 +8,9 @@ import { LedgerEntriesComponent }       from "./LedgerEntries/component";
 import { SimpleTransactionsComponent }  from "./SimpleTransactions/component";
 import { UploadsComponent }             from "./Uploads/component";
 
+/* Complex components */
+import { ComplexExistingReceiptComponent } from "./workflow/complex/ExistingReceipt/component";
+
 @Component({
   selector: "my-app",
   templateUrl: "app/app.component.html",
@@ -45,6 +48,11 @@ import { UploadsComponent }             from "./Uploads/component";
     path: "/uploads",
     name: "Uploads",
     component: UploadsComponent
+  },
+  {
+    path: "/workflow/complex/existing-receipt",
+    name: "Complex Existing Receipt",
+    component: ComplexExistingReceiptComponent
   }
 ])
 

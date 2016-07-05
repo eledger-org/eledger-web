@@ -1,19 +1,8 @@
-<h2>
-  <!--{{ledgerEntries}}!-->
-</h2>
-
-<p-dataTable [value]="ledgerEntries"
-  [paginator]="true" [rowsPerPageOptions]="[10,50,100,1000]" [pageLinks]="5"
+<e-ledger-entries-datatable
+  [value]="ledgerEntries"
+  (onLazyLoad)="loadLazy($event)"
+  [cols]="cols"
   [totalRecords]="totalRecords" [rows]="totalRows"
-  [editable]="true"
-  [lazy]="true" (onLazyLoad)="loadLazy($event)">
-  <header>Yay!</header>
-  <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [editable]="true"></p-column>
-  <footer>
-    <div class="ui-helper-clearfix" style="width:100%">
-      <button type="button" pButton icon="fa-plus" style="float:left" (click)="addNewLedgerEntryButton()" label="Add">
-      </button>
-    </div>
-  </footer>
-</p-dataTable>
+  [createAllowed]="false"
+  ></e-ledger-entries-datatable>
 

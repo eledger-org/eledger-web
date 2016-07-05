@@ -6,6 +6,12 @@ import { LedgerEntriesService } from "./service";
 
 import { EledgerApiService } from "../api/eledger/service";
 
+import { LedgerEntriesDataTableComponent } from "../components/LedgerEntriesDataTable/component";
+
+import {
+  LazyLoadEvent
+} from "primeng/primeng";
+
 @Component({
   selector: "LedgerEntries",
 	templateUrl: "./app/LedgerEntries/component.html",
@@ -14,20 +20,13 @@ import { EledgerApiService } from "../api/eledger/service";
     LedgerEntriesService
   ],
   directives: [
-    CORE_DIRECTIVES
-    /*
-    DataTable,
-    Button,
-    Column,
-    Header,
-    Footer
-    */
+    CORE_DIRECTIVES,
+    LedgerEntriesDataTableComponent
   ]
 })
 
 export class LedgerEntriesComponent implements OnInit {
-  @Input()
-  public ledgerEntries;
+  public ledgerEntries: any[];
   public totalRecords;
   public totalRows;
 
@@ -40,7 +39,8 @@ export class LedgerEntriesComponent implements OnInit {
 
   constructor(
     private ledgerEntriesService: LedgerEntriesService,
-    private routeParams: RouteParams) {
+    private routeParams: RouteParams
+  ) {
   }
 
   ngOnInit() {
@@ -54,24 +54,14 @@ export class LedgerEntriesComponent implements OnInit {
     ];
 
     this.totalRows = 10;
+
+    this.getLedgerEntries(0, this.totalRows);
   }
 
-  addNewLedgerEntryButton() {
-    this.ledgerEntries.unshift({
-      "generalLedgerDate": "Required",
-      "description": "Required",
-      "account": "Required",
-      "reconciled": "NO"
-    });
-  }
-
-  /*
   private loadLazy(event: LazyLoadEvent) {
-    console.log(event);
     this.getLedgerEntries(event["first"], event["rows"]);
     this.totalRows = event["rows"];
   }
-  */
 
   private getLedgerEntries(offset: number, limit: number): void {
     this.ledgerEntriesService
@@ -80,16 +70,16 @@ export class LedgerEntriesComponent implements OnInit {
         this.cols = [];
 
         for (let prop in data["results"][0]) {
-          if (this.filter.indexOf(prop) <= -1) {
-            this.cols.push({
-              field: prop,
-              header: prop
-            });
-          }
+          this.cols.push({
+            field: prop,
+            header: prop,
+            enabled: !this.filter.includes(prop)
+          });
         }
 
         this.totalRecords   = data["count"];
         this.ledgerEntries  = data["results"];
+
         console.log({
           totalRows: this.totalRows,
           totalRecords: this.totalRecords,

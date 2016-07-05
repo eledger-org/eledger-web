@@ -1,0 +1,117 @@
+<p-dataTable #dt
+  [value]="value"
+  [paginator]="true" [rowsPerPageOptions]="[10,50,100,1000]" [pageLinks]="5"
+  [totalRecords]="totalRecords" [rows]="rows"
+  [editable]="true"
+  [lazy]="true" (onLazyLoad)="loadLazy($event)"
+  sortField="id"
+  sortOrder="1"
+  reorderableColumns="true"
+  resizableColumns="true"
+  >
+  <p-column
+    *ngIf="getFieldEnabled('id')"
+    >
+    <template let-ledgerEntry="rowData">
+      <button type="button" pButton (click)="deleteLedgerEntry(ledgerEntry)" icon="fa-trash-o"></button>
+    </template>
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('id')"
+    [field]="getFieldName('id')"
+    [header]="getFieldHeader('id')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('generalLedgerDate')"
+    [field]="getFieldName('generalLedgerDate')"
+    [header]="getFieldHeader('generalLedgerDate')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('description')"
+    [field]="getFieldName('description')"
+    [header]="getFieldHeader('description')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('account')"
+    [field]="getFieldName('account')"
+    [header]="getFieldHeader('account')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('reconciled')"
+    [field]="getFieldName('reconciled')"
+    [header]="getFieldHeader('reconciled')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('credit')"
+    [field]="getFieldName('credit')"
+    [header]="getFieldHeader('credit')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('debit')"
+    [field]="getFieldName('debit')"
+    [header]="getFieldHeader('debit')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('createdDate')"
+    [field]="getFieldName('createdDate')"
+    [header]="getFieldHeader('createdDate')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('createdBy')"
+    [field]="getFieldName('createdBy')"
+    [header]="getFieldHeader('createdBy')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('modifiedDate')"
+    [field]="getFieldName('modifiedDate')"
+    [header]="getFieldHeader('modifiedDate')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('modifiedBy')"
+    [field]="getFieldName('modifiedBy')"
+    [header]="getFieldHeader('modifiedBy')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('deletedDate')"
+    [field]="getFieldName('deletedDate')"
+    [header]="getFieldHeader('deletedDate')"
+    sortable="true"
+    >
+  </p-column>
+  <p-column
+    *ngIf="getFieldEnabled('deletedBy')"
+    [field]="getFieldName('deletedBy')"
+    [header]="getFieldHeader('deletedBy')"
+    sortable="true"
+    >
+  </p-column>
+  <footer *ngIf="createAllowed">
+    <div class="ui-helper-clearfix" style="width:100%">
+      <button type="button" pButton icon="fa-plus" style="float:left" (click)="addLedgerEntry($event)" label="Add">
+      </button>
+    </div>
+  </footer>
+</p-dataTable>
+

@@ -5,19 +5,19 @@ import { Observable } from "rxjs/Observable";
 import { EledgerApiService } from "../api/eledger/service";
 
 @Injectable()
-export class SimpleTransactionsService {
+export class ComplexTransactionsService {
   private actionUrl: string;
   private headers: Headers;
 
   constructor(private _http: Http, private _configuration: EledgerApiService) {
-    this.actionUrl = _configuration.getApiUrl() + "simple-transactions/";
+    this.actionUrl = _configuration.getApiUrl() + "complex-transactions/";
 
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
     this.headers.append("Accept", "application/json");
   }
 
-  public getSimpleTransactions =  (offset: number, limit: number): Observable<Response> => {
+  public getComplexTransactions =  (offset: number, limit: number): Observable<Response> => {
     let params: URLSearchParams = new URLSearchParams();
     if (offset !== undefined) {
       params.set("offset", "" + offset);
@@ -39,8 +39,8 @@ export class SimpleTransactionsService {
     return this._http.get(this.actionUrl).map(res => res.json());
   }
 
-  public postNewSimpleTransaction = (newSimpleTransaction): Observable<Response> => {
-    let body = JSON.stringify({length: 1, results: [newSimpleTransaction]});
+  public postNewComplexTransaction = (newComplexTransaction): Observable<Response> => {
+    let body = JSON.stringify({length: 1, results: [newComplexTransaction]});
 
     let options = new RequestOptions({
       headers: new Headers({
