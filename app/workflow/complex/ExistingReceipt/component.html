@@ -31,58 +31,97 @@
             [(ngModel)]="newTransaction.description" />
         </div>
 
-        <p-dataTable
-          #dt
-          [value]="complexTransactions"
-          [editable]="true"
-          reorderableColumns="true"
-          resizableColumns="true"
-          [footerRows]="footerRows"
-          (onEditComplete)="onEditComplete($event)"
-          >
-          <p-column
-            header="Trash"
-            >
-            <template let-ledgerEntry="rowData">
-              <button type="button" pButton (click)="del(ledgerEntry)" icon="fa-trash-o"></button>
-            </template>
-          </p-column>
-          <p-column
-            field="num"
-            header="Number"
-            >
-          </p-column>
-          <p-column
-            field="fullAccount"
-            header="Account"
-            >
-            <template let-ledgerEntry="rowData">
-              <select (change)="onChange(ledgerEntry, $event.target.value)">
-                <option *ngFor="let account of accounts" [value]="account.id">{{account.text}}</option>
-              </select>
-            </template>
-          </p-column>
-          <p-column
-            field="credit"
-            header="Credit"
-            [editable]="true"
-            >
-          </p-column>
-          <p-column
-            field="debit"
-            header="Debit"
-            [editable]="true"
-            >
-          </p-column>
-          <footer>
-            <div class="ui-helper-clearfix">
-              <button type="button" pButton icon="fa-plus" style="float:left" (click)="add($event)" label="Add">
+        <div class="table">
+          <div class="table-header-row table-row row">
+            <div class="col-sm-1">Trash</div>
+            <div class="col-sm-1">Num</div>
+            <div class="col-sm-6">Account</div>
+            <div class="col-sm-2">Credit</div>
+            <div class="col-sm-2">Debit</div>
+          </div>
+          <div *ngFor="let row of complexTransactions" class="table-row row">
+            <div class="col-sm-1 center-block">
+              <button type="button" class="btn btn-large"
+                pButton
+                (click)="del(row)"
+                icon="fa-trash"
+                >
               </button>
             </div>
-          </footer>
-        </p-dataTable>
+            <div class="col-sm-1">
+              <input type="text" disabled="true" class="form-control"
+                [(ngModel)]="row.num"
+                >
+            </div>
+            <div class="col-sm-6">
+              <p-autoComplete type="text"
+                [suggestions]="row.suggestedAccounts"
+                [(ngModel)]="row.selectedAccount"
+                (completeMethod)="search(row, $event)"
+                field="text"
+                [minLength]="0"
+                placeholder="Select your Account"
+                styleClass="wid100"
+                >
+              </p-autoComplete>
+            </div>
+            <div class="col-sm-2">
+              <input type="text" class="form-control currency"
+                [(ngModel)]="row.credit"
+                >
+            </div>
+            <div class="col-sm-2">
+              <input type="text" class="form-control currency"
+                [(ngModel)]="row.debit"
+                >
+            </div>
+          </div>
+          <div class="table-footer-row table-row row">
+            <div class="col-sm-1">
+              <input type="text" disabled="true" class="form-control"
+                value="-"
+                >
+            </div>
+            <div class="col-sm-1">
+              <input type="text" disabled="true" class="form-control"
+                value="-"
+                >
+            </div>
+            <div class="col-sm-6">
+              <input type="text" disabled="true" class="form-control"
+                value="Totals"
+                >
+            </div>
+            <div class="col-sm-2">
+              <input type="text" disabled="true" class="form-control currency"
+                [ngModel]="'$' + getSumOfCredits()"
+                >
+            </div>
+            <div class="col-sm-2">
+              <input type="text" disabled="true" class="form-control currency"
+                [ngModel]="'$' + getSumOfDebits()"
+                >
+            </div>
+          </div>
+          <div class="table-footer-row row">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-large"
+                pButton
+                (click)="add($event)"
+                icon="fa-plus"
+                label="Add"
+                >
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-large"
+          pButton
+          icon="fa-envelope"
+          label="Submit"
+          >
+        </button>
       </form>
     </div>
 

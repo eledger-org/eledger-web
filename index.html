@@ -4,7 +4,6 @@
     <title>Angular 2 QuickStart</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
     <!-- 1. Load libraries -->
      <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -38,13 +37,19 @@
     <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/omega/theme.css" />
     -->
     <!-- midnight theme -->
-    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/midnight/theme.css" />
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/bootstrap/theme.css" />
 
     <!-- primeui -->
+    <script src="/node_modules/primeui/primeui-ng-all.min.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" />
 
     <!-- global -->
     <script src="/static/js/global.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet/less" type="text/css" href="styles.less">
+
+    <!-- less -->
+    <script src="/static/js/less.min.js"></script>
 
     <script>
       System.import('app').then(function(m) {
@@ -58,5 +63,10 @@
   <!-- 3. Display the application -->
   <body>
     <my-app>Loading...</my-app>
+    <footer>
+      <!-- inputmask -->
+      <script src="/static/js/jquery.inputmask.bundle.js"></script>
+    </footer>
   </body>
+
 </html>

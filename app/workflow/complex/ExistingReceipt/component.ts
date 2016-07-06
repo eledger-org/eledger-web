@@ -10,6 +10,7 @@ import { EledgerApiService } from "../../../api/eledger/service";
 import { SELECT_DIRECTIVES } from "ng2-select/ng2-select";
 
 import {
+  AutoComplete,
   Button,
   Column,
   DataTable,
@@ -28,6 +29,7 @@ import {
     UploadsService
   ],
   directives: [
+    AutoComplete,
     Button,
     CORE_DIRECTIVES,
     Column,
@@ -44,6 +46,7 @@ export class ComplexExistingReceiptComponent implements OnInit {
   public complexTransactions: any[];
 
   public accounts: any[];
+
   public footerRows: any[];
 
   public totalRows: number;
@@ -88,6 +91,8 @@ export class ComplexExistingReceiptComponent implements OnInit {
       let description = this.newTransaction.description;
 
       this.complexTransactions.forEach(function(t) {
+        console.log(t);
+
         let credit = parseFloat(t.credit);
         let debit = parseFloat(t.debit);
 
@@ -102,7 +107,7 @@ export class ComplexExistingReceiptComponent implements OnInit {
         submission.ledgerEntries.push({
           generalLedgerDate: unixDate,
           description: description,
-          account: t.accountId,
+          account: t.selectedAccount.id,
           credit: credit * 100000,
           debit: debit * 100000
         });
@@ -175,26 +180,6 @@ export class ComplexExistingReceiptComponent implements OnInit {
     return sum;
   }
 
-  private buildSummary() {
-    let cr: number = this.getSumOfCredits();
-    let dr: number = this.getSumOfDebits();
-
-    this.footerRows = [
-      {
-        columns: [
-          {footer: "Totals", colspan: 2},
-          {footer: "Cr-Dr {$" + (cr - dr).toString() + "}"},
-          {footer: "$" + cr},
-          {footer: "$" + dr}
-        ]
-      }
-    ];
-  }
-
-  private onEditComplete(event) {
-    this.buildSummary();
-  }
-
   private add() {
     this.complexTransactions.push({
       "num": this.complexTransactions.length + 1
@@ -211,12 +196,18 @@ export class ComplexExistingReceiptComponent implements OnInit {
 
       return row;
     });
-
-    this.buildSummary();
   }
 
-  private onChange(rowData, event) {
-    this.complexTransactions[rowData.num - 1].accountId = parseInt(event);
+  private search(ledgerEntry, event) {
+    ledgerEntry.suggestedAccounts = [];
+
+    ledgerEntry.suggestedAccounts = this.accounts.filter(function(account) {
+      return account.text.toLowerCase().indexOf(event.query.toLowerCase()) >= 0;
+    });
+
+    console.log(ledgerEntry.suggestedAccounts);
+
+    return ledgerEntry.suggestedAccounts;
   }
 }
 
