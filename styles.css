@@ -41,10 +41,15 @@ body, input[text], button {
   width: auto;
 }
 
+.nopadding {
+  padding: 0px !important;
+}
+
 .wid100 {
   width: 100%;
 }
 
+.row,
 .table-row {
   padding: 5px;
 }

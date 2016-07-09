@@ -20,7 +20,7 @@ import { SELECT_DIRECTIVES } from "ng2-select/ng2-select";
 })
 
 export class AccountSelectorComponent implements OnInit {
-  @Input()  accounts: any[]
+  @Input()  accounts: any[];
   @Input()  label: string;
   @Input()  name: string;
   @Output() accountUpdated = new EventEmitter();

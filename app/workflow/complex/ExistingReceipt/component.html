@@ -1,133 +1,175 @@
 <div class="container-fluid">
-  <div class="row">
+  <div class="row nopadding">
     <div class="col-sm-6">
       <form (ngSubmit)="onSubmit()" #accountForm="ngForm">
-        <div class="form-group">
-          <label for="transactionId">Transaction ID</label>
-          <p>
-            {{newTransaction.transactionId || "N/A"}}
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label for="uploadId">Upload ID</label>
-          <input
-            type="text" class="form-control" style="margin-bottom: 20px;"
-            [(ngModel)]="newTransaction.uploadId"
-            >
-        </div>
-
-        <div class="form-group">
-          <label for="date">Date</label>
-          <input
-            type="date" class="form-control" style="margin-bottom: 20px;"
-            [(ngModel)]="newTransaction.transactionDateText" />
-        </div>
-
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input
-            type="text" class="form-control" style="margin-bottom: 20px;"
-            [(ngModel)]="newTransaction.description" />
-        </div>
-
-        <div class="table">
-          <div class="table-header-row table-row row">
-            <div class="col-sm-1">Trash</div>
-            <div class="col-sm-1">Num</div>
-            <div class="col-sm-6">Account</div>
-            <div class="col-sm-2">Credit</div>
-            <div class="col-sm-2">Debit</div>
+        <p-fieldset legend="Complex Transaction" toggleable="true">
+          <div class="form-group">
+            <label for="transactionId">Transaction ID</label>
+            <p>
+              {{newTransaction.transactionId || "N/A"}}
+            </p>
           </div>
-          <div *ngFor="let row of complexTransactions" class="table-row row">
-            <div class="col-sm-1 center-block">
-              <button type="button" class="btn btn-large"
-                pButton
-                (click)="del(row)"
-                icon="fa-trash"
-                >
-              </button>
+
+          <div class="form-group">
+            <label for="uploadId">Upload ID</label>
+            <input
+              type="text" class="form-control" style="margin-bottom: 20px;"
+              [(ngModel)]="newTransaction.uploadId"
+              >
+          </div>
+
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input
+              type="date" class="form-control" style="margin-bottom: 20px;"
+              [(ngModel)]="newTransaction.transactionDateText" />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input
+              type="text" class="form-control" style="margin-bottom: 20px;"
+              [(ngModel)]="newTransaction.description" />
+          </div>
+        </p-fieldset>
+
+        <p-fieldset legend="Ledger Entries" toggleable="true">
+          <div class="table">
+            <div class="table-header-row table-row row">
+              <div class="col-sm-1">Trash</div>
+              <div class="col-sm-1">Num</div>
+              <div class="col-sm-6">Account</div>
+              <div class="col-sm-2">Credit</div>
+              <div class="col-sm-2">Debit</div>
             </div>
-            <div class="col-sm-1">
-              <input type="text" disabled="true" class="form-control"
-                [(ngModel)]="row.num"
-                >
+            <div *ngFor="let row of complexTransactions" class="table-row row">
+              <div class="col-sm-1 center-block">
+                <button type="button" class="btn btn-large"
+                  pButton
+                  (click)="del(row)"
+                  icon="fa-trash"
+                  >
+                </button>
+              </div>
+              <div class="col-sm-1">
+                <input type="text" disabled="true" class="form-control"
+                  [(ngModel)]="row.num"
+                  >
+              </div>
+              <div class="col-sm-6">
+                <p-autoComplete type="text"
+                  [suggestions]="row.suggestedAccounts"
+                  [(ngModel)]="row.selectedAccount"
+                  (completeMethod)="search(row, $event)"
+                  field="text"
+                  [minLength]="0"
+                  placeholder="Select your Account"
+                  styleClass="wid100"
+                  >
+                </p-autoComplete>
+              </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control currency"
+                  [(ngModel)]="row.credit"
+                  >
+              </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control currency"
+                  [(ngModel)]="row.debit"
+                  >
+              </div>
             </div>
-            <div class="col-sm-6">
+            <div class="table-footer-row table-row row">
+              <div class="col-sm-1">
+                <input type="text" disabled="true" class="form-control"
+                  value="-"
+                  >
+              </div>
+              <div class="col-sm-1">
+                <input type="text" disabled="true" class="form-control"
+                  value="-"
+                  >
+              </div>
+              <div class="col-sm-6">
+                <input type="text" disabled="true" class="form-control"
+                  value="Totals"
+                  >
+              </div>
+              <div class="col-sm-2">
+                <input type="text" disabled="true" class="form-control currency"
+                  [ngModel]="'$' + getSumOfCredits()"
+                  >
+              </div>
+              <div class="col-sm-2">
+                <input type="text" disabled="true" class="form-control currency"
+                  [ngModel]="'$' + getSumOfDebits()"
+                  >
+              </div>
+            </div>
+            <div class="table-footer-row row">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-large"
+                  pButton
+                  (click)="add($event)"
+                  icon="fa-plus"
+                  label="Add"
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </p-fieldset>
+
+        <p-fieldset legend="Metadata" toggleable="true" class="widauto">
+          <div *ngFor="let mdRow of filterAnyVisible(metadataRows)" class="row">
+            <div *ngFor="let mdField of mdRow.fields" [class]="mdField.divclass">
+              <label class="wid100"
+                *ngIf="!mdField.invisible && mdField.type !== undefined"
+                [attr.for]="mdField.name"
+                >{{mdField.text}}
+              </label>
+              <input type="text" class="form-control"
+                *ngIf="!mdField.invisible && mdField.type === 'input'"
+                [id]="mdField.name"
+                [name]="mdField.name"
+                [(ngModel)]="newTransaction.metadata[mdField.name]"
+                >
               <p-autoComplete type="text"
-                [suggestions]="row.suggestedAccounts"
-                [(ngModel)]="row.selectedAccount"
-                (completeMethod)="search(row, $event)"
-                field="text"
+                *ngIf="!mdField.invisible && mdField.type === 'autoComplete'"
+                [suggestions]="filteredMetadataSuggestions[mdField.name]"
+                [(ngModel)]="newTransaction.metadata[mdField.name]"
+                (completeMethod)="filterMetadataSuggestions(mdField.name, $event)"
                 [minLength]="0"
                 placeholder="Select your Account"
                 styleClass="wid100"
+                [multiple]="mdField.multi || false"
                 >
               </p-autoComplete>
             </div>
-            <div class="col-sm-2">
-              <input type="text" class="form-control currency"
-                [(ngModel)]="row.credit"
-                >
-            </div>
-            <div class="col-sm-2">
-              <input type="text" class="form-control currency"
-                [(ngModel)]="row.debit"
-                >
-            </div>
           </div>
-          <div class="table-footer-row table-row row">
-            <div class="col-sm-1">
-              <input type="text" disabled="true" class="form-control"
-                value="-"
-                >
-            </div>
-            <div class="col-sm-1">
-              <input type="text" disabled="true" class="form-control"
-                value="-"
-                >
-            </div>
-            <div class="col-sm-6">
-              <input type="text" disabled="true" class="form-control"
-                value="Totals"
-                >
-            </div>
-            <div class="col-sm-2">
-              <input type="text" disabled="true" class="form-control currency"
-                [ngModel]="'$' + getSumOfCredits()"
-                >
-            </div>
-            <div class="col-sm-2">
-              <input type="text" disabled="true" class="form-control currency"
-                [ngModel]="'$' + getSumOfDebits()"
-                >
-            </div>
-          </div>
-          <div class="table-footer-row row">
-            <div class="col-sm-12">
-              <button type="button" class="btn btn-large"
-                pButton
-                (click)="add($event)"
-                icon="fa-plus"
-                label="Add"
-                >
-              </button>
-            </div>
+        </p-fieldset>
+        <!--
+                  suggestions="row.suggestedAccounts"
+                  ngModel="row.selectedAccount"
+                  completeMethod="search(row, $event)"
+        -->
+
+        <div class="row">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-large"
+              pButton
+              icon="fa-envelope"
+              label="Submit"
+              >
+            </button>
           </div>
         </div>
-
-        <button type="submit" class="btn btn-large"
-          pButton
-          icon="fa-envelope"
-          label="Submit"
-          >
-        </button>
       </form>
     </div>
 
-    <div class="col-sm-6">
-      <img src="{{uploadSrc}}"
-        [style.height.px]="imageHeight"
+    <div class="col-sm-6 nopadding">
+      <img class="nopadding" src="{{uploadSrc}}"
+        [style.height.px]="getImageHeight()"
       >
     </div>
   </div>

@@ -3,6 +3,8 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from "@angular/common";
 
 import { AccountsService } from "../../../Accounts/service";
 import { ComplexTransactionsService } from "../../../ComplexTransactions/service";
+import { TransactionsService } from "../../../Transactions/service";
+import { UIConfigurationsService } from "../../../UIConfigurations/service";
 import { UploadsService } from "../../../Uploads/service";
 
 import { EledgerApiService } from "../../../api/eledger/service";
@@ -14,6 +16,7 @@ import {
   Button,
   Column,
   DataTable,
+  Fieldset,
   Footer,
   Header,
   LazyLoadEvent
@@ -26,6 +29,8 @@ import {
     AccountsService,
     EledgerApiService,
     ComplexTransactionsService,
+    TransactionsService,
+    UIConfigurationsService,
     UploadsService
   ],
   directives: [
@@ -34,6 +39,7 @@ import {
     CORE_DIRECTIVES,
     Column,
     DataTable,
+    Fieldset,
     Footer,
     FORM_DIRECTIVES,
     Header,
@@ -43,6 +49,8 @@ import {
 })
 
 export class ComplexExistingReceiptComponent implements OnInit {
+  public initialLedgerEntriesCount: number = 2;
+
   public complexTransactions: any[];
 
   public accounts: any[];
@@ -55,35 +63,129 @@ export class ComplexExistingReceiptComponent implements OnInit {
   public newTransaction;
   public uploadSrc;
 
-  public imageHeight: number;
+  public disableHeightChanges: boolean;
+  public imageHeightSaved: number;
+
+  public metadataRows: any[];
+
+  public metadataSuggestions: any[];
+  public filteredMetadataSuggestions: any[];
 
   constructor(
     private accountsService: AccountsService,
     private complexTransactionsService: ComplexTransactionsService,
+    private transactionsService: TransactionsService,
+    private uiConfigurationsService: UIConfigurationsService,
     private uploadsService: UploadsService
   ) {
   }
 
   ngOnInit() {
+    this.filteredMetadataSuggestions = [];
+    this.metadataSuggestions = [];
+
     this.accounts = [];
-    this.newTransaction = {};
+    this.newTransaction = {
+      metadata: {}
+    };
     this.complexTransactions = [];
 
+    this.getMetadataRows();
     this.getAllAccounts();
     this.getUnmappedUpload();
 
-    this.imageHeight = window.innerHeight;
+    for (let i = 0; i < this.initialLedgerEntriesCount; ++i) {
+      this.add();
+    }
   }
 
-  @HostListener("window:resize", ["$event"])
-  onResize(event) {
-    this.imageHeight = event.target.innerHeight;
+  getMetadataRows() {
+    this.metadataRows = [];
+
+    this.uiConfigurationsService
+      .getUIConfigurations("ComplexReceiptMetadata")
+      .subscribe((data) => {
+        this.metadataRows = JSON.parse(data["results"][0].uiConfiguration);
+
+        this.getMetadataSuggestions();
+      });
+  }
+
+  getMetadataSuggestions() {
+    let suggestionsToFetch = [];
+    let fields;
+
+    for (let i = 0; i < this.metadataRows.length; ++i) {
+      fields = this.metadataRows[i].fields;
+
+      for (let j = 0; j < fields.length; ++j) {
+        if (!fields[j].invisible && fields[j].type === "autoComplete") {
+          suggestionsToFetch.push({
+            name: fields[j].name,
+            count: fields[j].suggestionCount || 10
+          });
+        }
+      }
+    }
+
+    this.transactionsService.getSuggestions(suggestionsToFetch)
+      .subscribe((data) => {
+        this.metadataSuggestions = data;
+      });
+  }
+
+  filterAnyVisible(metadataRows) {
+    if (metadataRows === undefined || metadataRows.length <= 0) {
+      return [];
+    }
+
+    return metadataRows.filter(function(row) {
+      return row.fields.reduce(function(pre, cur) {
+        if (pre.invisible) {
+          return !cur.invisible;
+        } else {
+          return true;
+        }
+      });
+    });
+  }
+
+  getImageHeight() {
+    let slf = this;
+
+    if (slf.disableHeightChanges) {
+      return slf.imageHeightSaved;
+    }
+
+    if (document !== undefined) {
+      let body = document.getElementsByTagName("body");
+
+      if (body !== undefined && body.length >= 1) {
+        slf.imageHeightSaved =
+          parseInt(window.getComputedStyle(body[0], null).getPropertyValue("height"));
+
+        setTimeout(function() {
+          slf.disableHeightChanges = false;
+        }, 500);
+      }
+    } else {
+      setTimeout(function() {
+        slf.disableHeightChanges = false;
+      }, 500);
+
+      slf.imageHeightSaved = 300;
+    }
+
+    slf.disableHeightChanges = true;
+
+    return slf.imageHeightSaved;
   }
 
   onSubmit() {
     try {
       let submission = {
         ledgerEntries: [],
+        metadata: this.newTransaction.metadata,
         uploads: []
       };
 
@@ -91,8 +193,6 @@ export class ComplexExistingReceiptComponent implements OnInit {
       let description = this.newTransaction.description;
 
       this.complexTransactions.forEach(function(t) {
-        console.log(t);
-
         let credit = parseFloat(t.credit);
         let debit = parseFloat(t.debit);
 
@@ -117,11 +217,9 @@ export class ComplexExistingReceiptComponent implements OnInit {
         id: parseInt(this.newTransaction.uploadId)
       });
 
-      console.log(submission);
-
-      this.complexTransactionsService.postNewComplexTransaction(submission).subscribe((data) => {
-        console.log(data);
-
+      this.complexTransactionsService
+        .postNewComplexTransaction(submission)
+        .subscribe((data) => {
         this.getUnmappedUpload();
       });
     } catch (ex) {
@@ -137,8 +235,6 @@ export class ComplexExistingReceiptComponent implements OnInit {
 
         this.newTransaction.uploadId = this.unmappedUpload.id;
         this.uploadSrc = this.unmappedUpload.uploadLink;
-
-        console.log(this.unmappedUpload.uploadLink);
       });
   }
 
@@ -151,8 +247,6 @@ export class ComplexExistingReceiptComponent implements OnInit {
 
           return result;
         });
-
-        console.log(this.accounts[0]);
       });
   }
 
@@ -198,14 +292,33 @@ export class ComplexExistingReceiptComponent implements OnInit {
     });
   }
 
+  private filterMetadataSuggestions(mdFieldName, event) {
+    if (this.metadataSuggestions === undefined) {
+      return [];
+    }
+
+    if (this.metadataSuggestions[mdFieldName] === undefined) {
+      this.filteredMetadataSuggestions[mdFieldName] = [];
+
+      return [];
+    }
+
+    this.filteredMetadataSuggestions[mdFieldName] =
+      this.metadataSuggestions[mdFieldName].filter(function(md) {
+        return md[mdFieldName].toLowerCase().indexOf(event.query.toLowerCase()) >= 0;
+      }).map(function(md) {
+        return md[mdFieldName];
+      });
+
+    return this.filteredMetadataSuggestions[mdFieldName];
+  }
+
   private search(ledgerEntry, event) {
     ledgerEntry.suggestedAccounts = [];
 
     ledgerEntry.suggestedAccounts = this.accounts.filter(function(account) {
       return account.text.toLowerCase().indexOf(event.query.toLowerCase()) >= 0;
     });
-
-    console.log(ledgerEntry.suggestedAccounts);
 
     return ledgerEntry.suggestedAccounts;
   }
