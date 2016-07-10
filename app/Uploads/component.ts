@@ -67,7 +67,8 @@ export class UploadsComponent implements OnInit {
 
   constructor(
     private uploadsService: UploadsService,
-    private routeParams: RouteParams) {
+    private routeParams: RouteParams
+  ) {
   }
 
   ngOnInit() {

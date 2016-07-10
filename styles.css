@@ -45,6 +45,10 @@ body, input[text], button {
   padding: 0px !important;
 }
 
+.nomargin {
+	margin: 0px 0px 0px 0px !important;
+}
+
 .wid100 {
   width: 100%;
 }
@@ -52,5 +56,24 @@ body, input[text], button {
 .row,
 .table-row {
   padding: 5px;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+.really-please-center {
+    display:table-cell;
+    vertical-align:middle;
+    float:none;
 }
 

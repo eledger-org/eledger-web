@@ -14,7 +14,8 @@
     "ng2-select":                 "node_modules/ng2-select/",
     "ng2-bootstrap":              "node_modules/ng2-bootstrap/",
     "primeng":                    "node_modules/primeng/",
-    "angular2TextMask":           "node_modules/angular2-text-mask/dist"
+    "angular2TextMask":           "node_modules/angular2-text-mask/dist",
+    "ng2-file-upload":            "node_modules/ng2-file-upload"
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
@@ -24,7 +25,8 @@
     "ng2-select":                 { defaultExtension: "js", main: "index.js" },
     "ng2-bootstrap":              { main: "index.js" },
     "primeng":                    { defaultExtension: "js" },
-    "angular2TextMask":           { main: "angular2TextMask.js" }
+    "angular2TextMask":           { main: "angular2TextMask.js" },
+    "ng2-file-upload":            { main: "ng2-file-upload.js" }
   };
   var ngPackageNames = [
     "common",

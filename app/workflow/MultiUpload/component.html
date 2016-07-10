@@ -1,0 +1,89 @@
+<input ng2FileSelect [uploader]="fileUploader" id="camera-select" class="file-button" type="file" accept="image/*" capture="camera">
+<div class="container-fluid">
+  <div class="col-sm-4">
+    <div class="row table-row" id="menuRow">
+      <button type="button" class="btn btn-large"
+        pButton
+        (click)="cameraClick()"
+        icon="fa-camera"
+        label="Take a Picture"
+        >
+      </button>
+      <button type="button" class="btn btn-large"
+        pButton
+        (click)="rotate(-90)"
+        icon="fa-rotate-left"
+        >
+      </button>
+      <button type="button" class="btn btn-large"
+        pButton
+        (click)="rotate(90)"
+        icon="fa-rotate-right"
+        >
+      </button>
+      <button type="button" class="btn btn-large"
+        pButton
+        (click)="rotate(180)"
+        icon="fa-rotate-right"
+        label="180"
+        >
+      </button>
+      <button type="button" class="btn btn-large"
+        pButton
+        (click)="refresh()"
+        icon="fa-refresh"
+        >
+      </button>
+    </div>
+    <div class="row table-row">
+      <p-dataScroller
+        [value]="multiUploadData"
+        [rows]="20"
+        [lazy]="true"
+        (onLazyLoad)="onLazyLoad($event)"
+        [inline]="true"
+        [scrollHeight]="scrollHeight"
+        >
+        <template let-multiUpload>
+          <div class="row table-row">
+            <div class="col-sm-3 really-please-center">
+              <div class="center-block text-center">
+                <img
+                  [src]="multiUpload.thumbnail"
+                  (click)="getUpload(multiUpload)"
+                  >
+              </div>
+              <button type="button" class="btn btn-large"
+                pButton
+                (click)="editTransaction(multiUpload)"
+                icon="fa-edit"
+                >
+              </button>
+            </div>
+            <div class="col-sm-9 really-please-center">
+              <div class="panel nomargin">
+                <div class="panel-body">
+                  <b>Description</b>: {{multiUpload.description}}
+                  <br><b>Total Debit</b>: {{multiUpload.debit | currency: "USD" : true : "1.2-2"}}
+                  <br><b>Total Credit</b>: {{multiUpload.credit | currency: "USD" : true : "1.2-2"}}
+                  <br><b>Debit Account</b>: {{multiUpload.debitAcct}}
+                  <br><b>Credit Account</b>: {{multiUpload.crebitAcct}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </p-dataScroller>
+    </div>
+  </div>
+  <div id="galleriaCol" class="col-sm-8">
+    <p-galleria
+      [images]="images"
+      [panelHeight]="panelHeight"
+      [panelWidth]="panelWidth"
+      [autoPlay]="autoPlay"
+      [transitionInterval]="transitionInterval"
+      >
+    </p-galleria>
+  </div>
+</div>

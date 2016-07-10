@@ -34,6 +34,7 @@
     "es6-shim": "^0.35.0",
     "jquery": "2.2.2",
     "ng2-bootstrap": "1.0.17",
+    "ng2-file-upload": "^1.0.3",
     "ng2-select": "^1.0.3",
     "primeng": "=1.0.0-beta.8",
     "primeui": "^4.1.12",

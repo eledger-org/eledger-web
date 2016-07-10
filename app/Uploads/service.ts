@@ -17,6 +17,10 @@ export class UploadsService {
     this.headers.append("Accept", "application/json");
   }
 
+  public getFileUploadUrl = () => {
+    return this.actionUrl + "new-upload";
+  }
+
   public getUploads =  (offset: number, limit: number, sortField: string, sortOrder: number): Observable<Response> => {
     let params: URLSearchParams = new URLSearchParams();
     if (offset !== undefined) {
@@ -42,6 +46,24 @@ export class UploadsService {
       .map(this.transformResponseToHuman);
   }
 
+  public getMultiUploadData = (offset: number, limit: number): Observable<Response> => {
+    let params: URLSearchParams = new URLSearchParams();
+    let url = this.actionUrl + "multi-upload-data";
+
+    if (offset !== undefined) {
+      params.set("offset", "" + offset);
+    }
+
+    if (limit !== undefined) {
+      params.set("limit", "" + limit);
+    }
+
+    return this._http
+      .get(url, {
+        search: params
+      }).map(res => res.json());
+  }
+
   public getUnmappedUpload = (): Observable<Response> => {
     let url = this.actionUrl + "unmapped";
 
@@ -51,6 +73,17 @@ export class UploadsService {
 
   public getById = (id: number): Observable<Response> => {
     return this._http.get(this.actionUrl).map(this.transformResponseToHuman);
+  }
+
+  public rotate = (img: string, rot: number): Observable<Response> => {
+    let params: URLSearchParams = new URLSearchParams();
+    let url = this.actionUrl + "rotate-file";
+
+    params.set("imageTarget", img);
+    params.set("rotateDegrees", "" + rot);
+
+    return this._http
+      .get(url, {search: params}).map(res => res.json());
   }
 
   public transformResponseToHuman(res) {

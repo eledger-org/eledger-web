@@ -5,6 +5,7 @@ import { NewAccountComponent }          from "./workflow/NewAccount/component";
 import { DatabaseVersionComponent }     from "./DatabaseVersion/component";
 import { ExistingReceiptComponent }     from "./workflow/ExistingReceipt/component";
 import { LedgerEntriesComponent }       from "./LedgerEntries/component";
+import { MultiUploadComponent }         from "./workflow/MultiUpload/component";
 import { SimpleTransactionsComponent }  from "./SimpleTransactions/component";
 import { UploadsComponent }             from "./Uploads/component";
 
@@ -53,6 +54,11 @@ import { ComplexExistingReceiptComponent } from "./workflow/complex/ExistingRece
     path: "/workflow/complex/existing-receipt",
     name: "Complex Existing Receipt",
     component: ComplexExistingReceiptComponent
+  },
+  {
+    path: "/workflow/multi-upload",
+    name: "Multi-Upload Form",
+    component: MultiUploadComponent
   }
 ])
 
