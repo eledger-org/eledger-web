@@ -64,10 +64,10 @@
               <div class="panel nomargin">
                 <div class="panel-body">
                   <b>Description</b>: {{multiUpload.description}}
-                  <br><b>Total Debit</b>: {{multiUpload.debit | currency: "USD" : true : "1.2-2"}}
-                  <br><b>Total Credit</b>: {{multiUpload.credit | currency: "USD" : true : "1.2-2"}}
-                  <br><b>Debit Account</b>: {{multiUpload.debitAcct}}
-                  <br><b>Credit Account</b>: {{multiUpload.crebitAcct}}
+                  <br><b>Total Debit</b>: {{multiUpload.sumDebit | currency: "USD" : true : "1.2-2"}}
+                  <br><b>Total Credit</b>: {{multiUpload.sumCredit | currency: "USD" : true : "1.2-2"}}
+                  <br><b>Debit Account</b>: {{multiUpload.debitAcctString}}
+                  <br><b>Credit Account</b>: {{multiUpload.creditAcctString}}
                 </div>
               </div>
             </div>

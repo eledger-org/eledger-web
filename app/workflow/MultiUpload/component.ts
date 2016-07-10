@@ -195,8 +195,6 @@ export class MultiUploadComponent implements OnInit {
   rotate(rot) {
     let indx = this.getSelectedImageIndex();
 
-    console.log(indx);
-
     if (indx !== undefined && indx !== null && indx >= 0 && indx < this.images.length) {
       let src = this.images[indx].source.replace(/[?].*/,"");
 
